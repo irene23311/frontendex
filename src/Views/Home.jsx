@@ -1,9 +1,22 @@
 import { Link } from "react-router-dom";
+import Antigravity from "../components/Antigravity"; 
 
 function Home() {
   return (
     <main className="page">
       <section className="hero">
+        {/* ✅ Antigravity background layer */}
+        <div className="hero-bg" aria-hidden="true">
+          <Antigravity
+            count={300}
+            magnetRadius={10}
+            ringRadius={10}
+            particleSize={2}
+            color="#FF9FFC"
+            autoAnimate={true}
+          />
+        </div>
+
         <div className="hero-copy">
           <p className="eyebrow">Immersive · Experimental · Spatial</p>
           <h1>

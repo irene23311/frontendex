@@ -1,11 +1,11 @@
 :root {
-  --ink: #0c0b0b;
-  --muted: #5f5f5f;
-  --paper: #f7f6f2;
-  --accent: #d8ff3f;
-  --line: rgba(0, 0, 0, 0.12);
-  --soft-line: rgba(0, 0, 0, 0.08);
-  --card: #ffffff;
+  --ink: #f4f7ff;
+  --muted: #b3bfd9;
+  --paper: #0b0f1a;
+  --accent: #39d6ff;
+  --line: rgba(255, 255, 255, 0.16);
+  --soft-line: rgba(255, 255, 255, 0.08);
+  --card: #141a2a;
 }
 
 .app-shell {
@@ -58,37 +58,100 @@
   color: var(--muted);
 }
 
-.site-nav {
-  display: flex;
+.menu-wrapper {
+  position: relative;
+  display: grid;
+  justify-items: end;
+}
+
+.menu-button {
+  display: inline-flex;
   align-items: center;
-  gap: 20px;
-  font-size: 0.95rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-}
-
-.site-nav a {
-  text-decoration: none;
-  color: inherit;
-}
-
-.site-nav a.active {
-  border-bottom: 2px solid var(--ink);
-  padding-bottom: 4px;
-}
-
-.nav-pill {
-  background: var(--accent);
+  border: 2px solid var(--line);
+  background: var(--card);
   color: var(--ink);
-  padding: 10px 18px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  cursor: pointer;
+  z-index: 12;
+}
+
+.menu-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 10px;
+  border: 2px solid var(--line);
+  display: grid;
+  place-items: center;
+  gap: 4px;
+  padding: 5px;
+}
+
+.menu-icon span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--ink);
   border-radius: 999px;
-  font-weight: 700;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.menu-button.is-open .menu-icon span:first-child {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.menu-button.is-open .menu-icon span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-button.is-open .menu-icon span:last-child {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 9, 16, 0.96);
+  backdrop-filter: blur(6px);
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 11;
+}
+
+.menu-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.overlay-nav {
+  display: grid;
+  gap: 20px;
+  text-align: center;
+}
+
+.overlay-nav a {
+  text-decoration: none;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+}
+
+.overlay-nav a.active {
+  color: var(--accent);
 }
 
 .page {
   display: flex;
   flex-direction: column;
-  gap: 72px;
+  gap: 300px;
+  padding-top: 170px;
+  padding-left:20px;
 }
 
 .hero {
@@ -96,6 +159,29 @@
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   gap: 48px;
   align-items: center;
+  padding-left: 40px;
+  position: relative;
+  min-height: 70vh;
+  overflow: hidden;
+}
+
+.hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.hero-bg canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
 }
 
 .hero-copy h1 {
@@ -141,13 +227,13 @@
 }
 
 .button.primary {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--accent);
+  color: #05121f;
 }
 
 .button.ghost {
-  border-color: var(--ink);
-  color: var(--ink);
+  border-color: var(--accent);
+  color: var(--accent);
   background: transparent;
 }
 
@@ -161,10 +247,10 @@
   width: min(320px, 80vw);
   aspect-ratio: 1 / 1.2;
   border-radius: 50% 50% 42% 42% / 52% 52% 48% 48%;
-  border: 2px solid var(--ink);
+  border: 2px solid var(--accent);
   display: grid;
   place-items: center;
-  background: radial-gradient(circle at 30% 20%, rgba(0, 0, 0, 0.12), transparent 55%);
+  background: radial-gradient(circle at 30% 20%, rgba(57, 214, 255, 0.15), transparent 55%);
 }
 
 .portrait-core {
@@ -172,17 +258,9 @@
   height: 78%;
   border-radius: 46% 54% 42% 58%;
   background:
-    linear-gradient(130deg, rgba(216, 255, 63, 0.6), rgba(0, 0, 0, 0.15)),
-    radial-gradient(circle at 30% 30%, #ffffff, #dcdad3);
-  border: 2px solid var(--ink);
-}
-
-.hero-meta {
-  font-size: 0.85rem;
-  color: var(--muted);
-  display: grid;
-  gap: 4px;
-  text-align: center;
+    linear-gradient(130deg, rgba(57, 214, 255, 0.6), rgba(9, 12, 20, 0.7)),
+    radial-gradient(circle at 30% 30%, #1b2438, #0b0f1a);
+  border: 2px solid var(--accent);
 }
 
 .section {
@@ -234,7 +312,7 @@
   border: 2px solid var(--soft-line);
   border-radius: 20px;
   padding: 18px;
-  background: #ffffff;
+  background: var(--card);
 }
 
 .projects-hero h1 {
@@ -245,8 +323,8 @@
   border: 2px solid var(--line);
   border-radius: 26px;
   padding: 24px;
-  background: #111111;
-  color: #f7f6f2;
+  background: #0c111c;
+  color: var(--ink);
 }
 
 .project-category h2 {
@@ -255,7 +333,7 @@
 }
 
 .project-category p {
-  color: rgba(247, 246, 242, 0.7);
+  color: rgba(244, 247, 255, 0.65);
 }
 
 .project-cards {
@@ -263,7 +341,7 @@
 }
 
 .project-card {
-  background: #0d0d0d;
+  background: #121a2a;
   border-radius: 18px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   padding: 16px;
@@ -274,8 +352,8 @@
 .project-swatch {
   height: 120px;
   border-radius: 12px;
-  background: linear-gradient(135deg, rgba(216, 255, 63, 0.5), rgba(255, 255, 255, 0.08));
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, rgba(57, 214, 255, 0.6), rgba(12, 16, 28, 0.9));
+  border: 1px solid rgba(57, 214, 255, 0.35);
 }
 
 .project-info {
@@ -285,7 +363,7 @@
 }
 
 .project-info span {
-  color: rgba(247, 246, 242, 0.7);
+  color: rgba(244, 247, 255, 0.65);
   font-size: 0.8rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -301,7 +379,7 @@
   border: 2px solid var(--line);
   border-radius: 20px;
   padding: 22px;
-  background: #ffffff;
+  background: var(--card);
 }
 
 .about-panel ul {
@@ -311,10 +389,10 @@
 }
 
 .contact-strip {
-  border: 2px solid var(--ink);
+  border: 2px solid var(--accent);
   border-radius: 24px;
   padding: 28px;
-  background: var(--accent);
+  background: rgba(57, 214, 255, 0.12);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -378,10 +456,6 @@
 }
 
 @media (max-width: 600px) {
-  .site-nav {
-    flex-wrap: wrap;
-  }
-
   .hero-copy h1 {
     font-size: 2.4rem;
   }

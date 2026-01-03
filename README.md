@@ -13,4 +13,4 @@ deploy the frontend and backend:
     npm run build
     firebase deploy
 
-now it's a movie app
+now it is a personal website, 1.02
